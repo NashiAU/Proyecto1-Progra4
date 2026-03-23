@@ -1,6 +1,6 @@
 package com.proyecto1.proyecto1progra4.security;
 
-import org.example.prestamoform.logic.Usuario;
+import com.proyecto1.proyecto1progra4.Logic.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
