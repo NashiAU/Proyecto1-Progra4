@@ -1,6 +1,6 @@
-package com.proyecto1.proyecto1progra4.logic;
+package com.proyecto1.proyecto1progra4.Logic;
 
-import com.proyecto1.proyecto1progra4.data.PrestamoRepository;
+import com.proyecto1.proyecto1progra4.Data.PrestamoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

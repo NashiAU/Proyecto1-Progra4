@@ -1,6 +1,6 @@
-package com.proyecto1.proyecto1progra4.data;
+package com.proyecto1.proyecto1progra4.Data;
 
-import com.proyecto1.proyecto1progra4.logic.Prestamo;
+import com.proyecto1.proyecto1progra4.Logic.Prestamo;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;

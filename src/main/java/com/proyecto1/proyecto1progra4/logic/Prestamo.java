@@ -1,4 +1,4 @@
-package com.proyecto1.proyecto1progra4.logic;
+package com.proyecto1.proyecto1progra4.Logic;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

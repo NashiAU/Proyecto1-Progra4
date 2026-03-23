@@ -1,12 +1,3 @@
-/* =========================================================
-   Bolsa de Empleo - MySQL Script (estilo "profe")
-   Modelo: Usuario + perfiles (Empresa/Oferente/Admin)
-   Opción A: NO duplicar correo en Empresa/Oferente
-            (correo vive en Usuario.username)
-   Niveles: INT (1..5) sin CHECK (lo validás en Java)
-   CV PDF: ruta (cv_path)
-   ========================================================= */
-
 DROP DATABASE IF EXISTS BolsaEmpleo;
 CREATE DATABASE BolsaEmpleo;
 USE BolsaEmpleo;
