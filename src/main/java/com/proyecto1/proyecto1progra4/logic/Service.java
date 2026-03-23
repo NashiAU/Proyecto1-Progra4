@@ -1,12 +1,12 @@
 package com.proyecto1.proyecto1progra4.Logic;
 
-import com.proyecto1.proyecto1progra4.Data.PrestamoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
 public class Service {
+    /*
     @Autowired
     private PrestamoRepository prestamos;
 
@@ -38,6 +38,5 @@ public class Service {
 
     public void prestamoDelete(String id) {
         prestamos.deleteById(id);
-    }
-
+     */
 }
