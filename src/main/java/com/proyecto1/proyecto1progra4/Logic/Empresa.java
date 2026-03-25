@@ -52,6 +52,13 @@ public class Empresa {
     @JoinColumn(name = "aprobado_por_admin_id")
     private Admin aprobadoPorAdmin;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false, unique = true)
+    private Usuario usuario;
+
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+
     public Long getId() {
         return id;
     }

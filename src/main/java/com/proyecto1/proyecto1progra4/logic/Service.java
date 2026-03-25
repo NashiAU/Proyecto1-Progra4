@@ -1,42 +1,131 @@
 package com.proyecto1.proyecto1progra4.Logic;
 
+import com.proyecto1.proyecto1progra4.Data.CaracteristicaRepository;
+import com.proyecto1.proyecto1progra4.Data.EmpresaRepository;
+import com.proyecto1.proyecto1progra4.Data.OferenteRepository;
+import com.proyecto1.proyecto1progra4.Data.PuestoRepository;
+import com.proyecto1.proyecto1progra4.Data.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 
 @org.springframework.stereotype.Service
 public class Service {
-    /*
-    @Autowired
-    private PrestamoRepository prestamos;
 
-    public List<Prestamo> prestamosAll() {
-        return prestamos.findAll();
+    @Autowired private UsuariosRepository usuarios;
+    @Autowired private EmpresaRepository empresas;
+    @Autowired private OferenteRepository oferentes;
+    @Autowired private PuestoRepository puestos;
+    @Autowired private CaracteristicaRepository caracteristicas;
+
+    // =========================
+    // HOME / CONSULTAS PUBLICAS
+    // =========================
+    public List<Puesto> top5PuestosPublicosRecientes() {
+        return puestos.findTop5ByTipoPublicacionOrderByFechaRegistroDesc("PUBLICO");
     }
 
-    public List<Prestamo> prestamoSearch(String nombre) {
-        return prestamos.findByNombre(nombre);
+    // =========================
+    // REGISTRO (crea Usuario + perfil pendiente)
+    // =========================
+    @Transactional
+    public void registrarEmpresa(Usuario u, Empresa e) {
+        // Reglas básicas
+        if (u.getId() != null) throw new IllegalArgumentException("Usuario ya tiene id");
+        u.setRol("EMPRESA");
+        if (u.getFechaCreacion() == null) u.setFechaCreacion(Instant.now());
+        if (u.getHabilitado() == null) u.setHabilitado(true);
+
+        usuarios.save(u);
+
+        // enlazar
+        e.setUsuario(u);
+        e.setEstadoAprobacion("PENDIENTE");
+        if (e.getFechaRegistro() == null) e.setFechaRegistro(Instant.now());
+
+        empresas.save(e);
     }
 
-    public void prestamosAdd(Prestamo prestamo) {
-        if(prestamos.existsById(prestamo.getId())){
-            throw new IllegalArgumentException("Prestamo ya existe");
-        }
-        prestamos.save(prestamo);
+    @Transactional
+    public void registrarOferente(Usuario u, Oferente o) {
+        if (u.getId() != null) throw new IllegalArgumentException("Usuario ya tiene id");
+        u.setRol("OFERENTE");
+        if (u.getFechaCreacion() == null) u.setFechaCreacion(Instant.now());
+        if (u.getHabilitado() == null) u.setHabilitado(true);
+
+        usuarios.save(u);
+
+        o.setUsuario(u);
+        o.setEstadoAprobacion("PENDIENTE");
+        if (o.getFechaRegistro() == null) o.setFechaRegistro(Instant.now());
+
+        oferentes.save(o);
     }
 
-    public Prestamo prestamoRead(String id) {
-        return prestamos.findById(id).orElseThrow(() -> new IllegalArgumentException("Prestamo no existe"));
+    // =========================
+    // ADMIN: APROBACIONES
+    // =========================
+    public List<Empresa> empresasPendientes() {
+        return empresas.findByEstadoAprobacion("PENDIENTE");
     }
 
-    public void prestamoUpdate(Prestamo prestamo) {
-        if(!prestamos.existsById(prestamo.getId())) {
-            throw new IllegalArgumentException("Prestamo no existe");
-        }
-        prestamos.save(prestamo);
+    public List<Oferente> oferentesPendientes() {
+        return oferentes.findByEstadoAprobacion("PENDIENTE");
     }
 
-    public void prestamoDelete(String id) {
-        prestamos.deleteById(id);
-     */
+    @Transactional
+    public void aprobarEmpresa(Long empresaId) {
+        Empresa e = empresas.findById(empresaId)
+                .orElseThrow(() -> new IllegalArgumentException("Empresa no existe: " + empresaId));
+        e.setEstadoAprobacion("APROBADO");
+        e.setFechaAprobacion(Instant.now());
+        empresas.save(e);
+    }
+
+    @Transactional
+    public void aprobarOferente(Long oferenteId) {
+        Oferente o = oferentes.findById(oferenteId)
+                .orElseThrow(() -> new IllegalArgumentException("Oferente no existe: " + oferenteId));
+        o.setEstadoAprobacion("APROBADO");
+        o.setFechaAprobacion(Instant.now());
+        oferentes.save(o);
+    }
+
+    // =========================
+    // EMPRESA: PUESTOS
+    // =========================
+    public List<Puesto> puestosPorEmpresa(Long empresaId) {
+        return puestos.findByEmpresaIdOrderByFechaRegistroDesc(empresaId);
+    }
+
+    @Transactional
+    public void crearPuesto(Puesto p) {
+        if (p.getId() != null) throw new IllegalArgumentException("Puesto ya tiene id");
+        if (p.getFechaRegistro() == null) p.setFechaRegistro(Instant.now());
+        if (p.getActivo() == null) p.setActivo(true);
+        puestos.save(p);
+    }
+
+    @Transactional
+    public void desactivarPuesto(Long puestoId) {
+        Puesto p = puestos.findById(puestoId)
+                .orElseThrow(() -> new IllegalArgumentException("Puesto no existe: " + puestoId));
+        p.setActivo(false);
+        p.setFechaDesactivacion(Instant.now());
+        puestos.save(p);
+    }
+
+    // =========================
+    // CARACTERISTICAS
+    // =========================
+    public List<Caracteristica> caracteristicasRaiz() {
+        // raíces: idPadre = null
+        return caracteristicas.findByIdPadre(null);
+    }
+
+    public List<Caracteristica> caracteristicasHijas(Long idPadre) {
+        return caracteristicas.findByIdPadre(idPadre);
+    }
 }
