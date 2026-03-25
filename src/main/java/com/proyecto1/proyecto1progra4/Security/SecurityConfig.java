@@ -1,4 +1,4 @@
-package com.proyecto1.proyecto1progra4.security;
+package com.proyecto1.proyecto1progra4.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

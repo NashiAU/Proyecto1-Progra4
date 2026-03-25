@@ -1,4 +1,4 @@
-package com.proyecto1.proyecto1progra4.security;
+package com.proyecto1.proyecto1progra4.Security;
 
 import com.proyecto1.proyecto1progra4.Data.UsuariosRepository;
 import com.proyecto1.proyecto1progra4.Logic.Usuario;
