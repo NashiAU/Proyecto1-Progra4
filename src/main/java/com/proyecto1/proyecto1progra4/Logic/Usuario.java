@@ -3,65 +3,46 @@ package com.proyecto1.proyecto1progra4.Logic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "usuario")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(max = 120)
     @NotNull
-    @Column(name = "username", nullable = false, length = 120)
+    @Size(max = 120)
+    @Column(nullable = false, unique = true, length = 120)
     private String username;
 
-    @Size(max = 100)
     @NotNull
-    @Column(name = "clave", nullable = false, length = 100)
+    @Size(max = 100)
+    @Column(nullable = false, length = 100)
     private String clave;
 
-    @Size(max = 10)
     @NotNull
-    @Column(name = "rol", nullable = false, length = 10)
+    @Size(max = 10)
+    @Column(nullable = false, length = 10)
     private String rol;
 
     @NotNull
-    @ColumnDefault("1")
-    @Column(name = "habilitado", nullable = false)
-    private Boolean habilitado = false;
+    @Column(nullable = false)
+    private Boolean habilitado = true;
 
     @NotNull
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "fecha_creacion", nullable = false)
-    private Instant fechaCreacion;
+    private Instant fechaCreacion = Instant.now();
 
-    public Long getId() {
-        return id;
+    public Instant getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setFechaCreacion(Instant fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public String getRol() {
@@ -80,12 +61,27 @@ public class Usuario {
         this.habilitado = habilitado;
     }
 
-    public Instant getFechaCreacion() {
-        return fechaCreacion;
+    public String getClave() {
+        return clave;
     }
 
-    public void setFechaCreacion(Instant fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
