@@ -30,7 +30,7 @@ public class UserDetailsImp implements UserDetails {
     }
     @Override
     public String getUsername() {
-        return usuario.getId().toString();
+        return usuario.getUsername();
     }
     @Override
     public boolean isAccountNonExpired() {
@@ -48,5 +48,4 @@ public class UserDetailsImp implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }
