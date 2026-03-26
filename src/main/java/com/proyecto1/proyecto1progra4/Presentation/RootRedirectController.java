@@ -1,4 +1,4 @@
-package com.proyecto1.proyecto1progra4.Presentation;
+package com.proyecto1.proyecto1progra4.presentation;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
