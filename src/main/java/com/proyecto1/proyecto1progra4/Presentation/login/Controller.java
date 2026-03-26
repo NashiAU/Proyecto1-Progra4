@@ -1,4 +1,4 @@
-package com.proyecto1.proyecto1progra4.presentation.login;
+package com.proyecto1.proyecto1progra4.Presentation.login;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class Controller {
     @GetMapping("/login")
     public String login() {
-        return "presentation/login/View";
+        return "login/View";
     }
 
     @GetMapping("/notAuthorized")
     public String notAuthorized() {
-        return "presentation/login/ViewNotAuthorized";
+        return "login/View"; // temporal para probar
     }
-}
+};

@@ -25,7 +25,9 @@ public class SecurityConfig {
                         // ===== RUTAS PÚBLICAS =====
                         .requestMatchers(
                                 "/",
-                                "/login",
+                                "/home",
+                                "/login**",
+                                "/error",
                                 "/notAuthorized",
                                 "/css/**", "/Styles/**", "/images/**"
                         ).permitAll()
@@ -58,8 +60,7 @@ public class SecurityConfig {
 
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/home", false)
+                        .loginProcessingUrl("/doLogin")
                         .successHandler(this::roleAwareSuccessHandler)
                         .permitAll()
                 )
