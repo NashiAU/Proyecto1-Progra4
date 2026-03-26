@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head th:fragment="head">
+    <title>Prestamo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/Styles/styles.css">
+
+    <link rel="icon" href="/images/favicon.ico">
+</head>
+
+<header>
+    <div class="nav-left">
+    <div class="logo">BolsaEmpleo</div>
+
+        <div class="nav-links">
+            <a href="#">Dashboard</a>
+            <a href="#">Mis puestos</a>
+            <a href="#">Publicar puesto</a>
+        </div>
+</div>
+</header>
+
+<body>
+    <h1>Buscar Puestos</h1>
+
+    <form method="get" action="/buscar">
+        <label>Palabra clave:</label>
+        <input type="text" name="keyword">
+
+        <label>Salario mínimo:</label>
+        <input type="number" name="salario">
+
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div class="puestos">
+        <!-- Resultados -->
+    </div>
+</body>
+
+
+<footer th:fragment="footer">
+    <div>
+        <b>Bolsa de Empleo</b><br>
+        Total Soft Inc.
+    </div>
+
+    <div>
+        Contacto: info@bolsaempleo.local
+    </div>
+
+</footer>
+
+</html>

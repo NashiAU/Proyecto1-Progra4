@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Prestamo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+</head>
+
+<body>
+<header>
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+
+        <div class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <span th:text="${#authentication != null ? #authentication.name : ''}">websoft@tuorg.com</span>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <h1>Iniciar Sesión</h1>
+    <div class="container">
+        <form method="post" th:action="@{/login}">
+            <label>Correo:</label><br>
+            <input type="email" name="username" required>
+            <br>
+            <label>Contraseña:</label><br>
+            <input type="password" name="password" required>
+            <br>
+            <button type="submit">Ingresar</button>
+
+        </form>
+    </div>
+</main>
+
+<footer>
+    <div>
+        <b>Bolsa de Empleo</b><br>
+        Total Soft Inc.
+    </div>
+
+    <div>
+        Contacto: info@bolsaempleo.local
+    </div>
+</footer>
+</body>
+</html>

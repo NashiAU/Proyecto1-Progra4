@@ -1,0 +1,226 @@
+header{
+    background:#1f2933;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 20px;
+}
+
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+}
+
+.nav-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    font-weight:bold;
+}
+
+.nav-links a{
+    color:#cfd8dc;
+    text-decoration:none;
+    margin-right:15px;
+}
+
+.nav-links a:hover{
+    color:white;
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.btn-logout{
+    background:#37474f;
+    color:white;
+    border:none;
+    padding:6px 12px;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+.container{
+    background-color: #dee0d09f;
+    max-width: 900px;   
+    margin: 0 auto;     
+    padding: 40px;
+}
+
+.title{
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.btn{
+    background:#2b7cff;
+    border:none;
+    color:white;
+    padding:10px 16px;
+    margin-right:10px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1f63d6;
+}
+
+/* FOOTER */
+
+footer{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:#1f2933;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    padding:15px 30px;
+    font-size:14px;
+}
+
+.puestos{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:5px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+}
+
+/* Encabezados */
+th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+/* Filas */
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Celdas */
+td {
+    padding: 10px;
+}
+
+/* Filas alternas */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Hover sobre fila */
+tr:hover {
+    background-color: #dfe6e9;
+    transition: 0.2s;
+}
+
+#desactivar {
+    color: red;
+    border: 2px solid red;
+    padding: 6px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#buscar {
+    color: rgb(41, 228, 72);
+    border: 2px solid rgb(41, 173, 29);
+    padding: 6px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#volver {
+    color: rgb(25, 85, 197);
+    border: 2px solid rgb(41, 29, 150);
+    padding: 6px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.contenedor{
+    display: flex;
+    gap: 30px;
+}
+
+/* cada columna */
+.habilidades,
+.ruta,
+.ingresar{
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* items de habilidades */
+.item{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* boton eliminar */
+.eliminar{
+    color: red;
+    border: 2px solid red;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.eliminar:hover{
+    background-color: red;
+    color: white;
+}
+
+/* inputs */
+input{
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+}
+
+/* boton agregar */
+form button{
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover{
+    background-color: #34495e;
+}

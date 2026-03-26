@@ -1,0 +1,52 @@
+<head th:fragment="head">
+    <title>Prestamo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/Styles/styles.css">
+
+    <link rel="icon" href="/images/favicon.ico">
+</head>
+
+<header th:fragment="header">
+    <div class="nav-left">
+    <div class="logo">BolsaEmpleo</div>
+
+        <div class="nav-links">
+            <a href="#">Dashboard</a>
+            <a href="#">Mis puestos</a>
+            <a href="#">Publicar puesto</a>
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <span>websoft@tuorg.com</span>
+        <button class="btn-logout">Salir</button>
+    </div>
+</header>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalle Candidato</title>
+</head>
+<body>
+    <h1>Detalle del Candidato</h1>
+
+    <p>Nombre: Juan Pérez</p>
+    <p>Email: juan@email.com</p>
+
+    <a href="#" id="volver">volver</a>
+</body>
+</html>
+
+<footer th:fragment="footer">
+    <div>
+        <b>Bolsa de Empleo</b><br>
+        Total Soft Inc.
+    </div>
+
+    <div>
+        Contacto: info@bolsaempleo.local
+    </div>
+
+</footer>
