@@ -26,7 +26,9 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/home",
+                                "/login",
                                 "/login**",
+                                "/dologin",
                                 "/error",
                                 "/notAuthorized",
                                 "/css/**", "/Styles/**", "/images/**"
@@ -61,7 +63,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/doLogin")
-                        .failureUrl("/login?error=true")
+                        .failureUrl("/login?fallo=1")
                         .successHandler(this::roleAwareSuccessHandler)
                         .permitAll()
                 )

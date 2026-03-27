@@ -11,6 +11,6 @@ public class Controller {
 
     @GetMapping("/notAuthorized")
     public String notAuthorized() {
-        return "login/View"; // temporal para probar
+        return "login/notAuthorized";
     }
 };
