@@ -28,6 +28,15 @@
 
 <main>
     <h1>Iniciar Sesión</h1>
+
+    <div th:if="${param.error != null}" style="color:red; margin-bottom:10px;">
+        Usuario o contraseña incorrectos.
+    </div>
+
+    <div th:if="${param.logout}" style="color:green; margin-bottom:10px;">
+        Sesión cerrada correctamente.
+    </div>
+
     <div class="container">
         <form method="post" th:action="@{/doLogin}">
             <label>Correo:</label><br>

@@ -61,6 +61,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/doLogin")
+                        .failureUrl("/login?error=true")
                         .successHandler(this::roleAwareSuccessHandler)
                         .permitAll()
                 )
