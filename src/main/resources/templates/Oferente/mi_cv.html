@@ -1,0 +1,74 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <title>Prestamo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/Styles/styles.css">
+
+    <link rel="icon" href="/images/favicon.ico">
+</head>
+
+<header th:fragment="header">
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+
+        <div class="nav-links">
+            <a th:href="@{/Oferente/dashboard}">Dashboard</a>
+            <a th:href="@{/Oferente/habilidades}">Mis habilidades</a>
+            <a th:href="@{/Oferente/mi_cv}">Mi CV</a>
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <span>websoft@tuorg.com</span>
+        <button class="btn-logout">Salir</button>
+    </div>
+</header>
+
+<body>
+
+<main>
+    <h1>Mi CV</h1>
+    <div class="container">
+
+        <!-- Mensaje de éxito -->
+        <div th:if="${mensaje}" style="color:green; margin-bottom:10px;" th:text="${mensaje}"></div>
+        <!-- Mensaje de error -->
+        <div th:if="${error}" style="color:red; margin-bottom:10px;" th:text="${error}"></div>
+
+        <!-- CV actual -->
+        <div th:if="${cvActual != null}">
+            <p>CV actual: <strong th:text="${cvActual}"></strong></p>
+            <a th:href="@{/Oferente/mi_cv/descargar}">Descargar CV</a>
+        </div>
+        <div th:if="${cvActual == null}">
+            <p>No tenés ningún CV subido todavía.</p>
+        </div>
+
+        <!-- Formulario para subir -->
+        <hr>
+        <h3>Subir nuevo CV</h3>
+        <form method="post" th:action="@{/Oferente/mi_cv/subir}" enctype="multipart/form-data">
+            <input type="file" name="archivo" accept="application/pdf" required>
+            <br><br>
+            <button type="submit">Subir PDF</button>
+        </form>
+
+    </div>
+</main>
+
+</body>
+
+
+<footer th:fragment="footer">
+    <div>
+        <b>Bolsa de Empleo</b><br>
+        Total Soft Inc.
+    </div>
+
+    <div>
+        Contacto: info@bolsaempleo.local
+    </div>
+
+</footer>
+</html>

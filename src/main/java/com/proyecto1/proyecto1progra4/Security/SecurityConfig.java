@@ -31,8 +31,12 @@ public class SecurityConfig {
                                 "/dologin",
                                 "/error",
                                 "/notAuthorized",
+                                "/Administrador/**",
+                                "/Empresa/**",
+                                "/Oferente/**",
                                 "/css/**", "/Styles/**", "/images/**"
                         ).permitAll()
+
 
                         // Si estas son las URLs reales de tu app (ojo: parecen nombres de paquete),
                         // entonces déjalas así. Si no lo son, cámbialas por /prestamos/list etc.
