@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS BolsaEmpleo;
-CREATE DATABASE BolsaEmpleo;
+CREATE DATABASE BolsaEmpleo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE BolsaEmpleo;
 
 /* =========================
@@ -158,8 +158,8 @@ create table OferenteHabilidad (
 
 /* ADMIN demo */
 insert into Usuario (username, clave, rol)
-values ('ADMIN01', '$2a$12$PEGAR_HASH_ADMIN_AQUI', 'ADMIN');
-/*correo: administrador@correo.com clave 111 */
+values ('administrador@correo.com', '$2a$12$esH9VOmi2lwFmh60ZH.Zo.kn3QTJ9DlbCfo7SuTABopgSai.EiO8O', 'ADMIN');
+/* clave 111 */
 
 insert into Admin (usuario_id, identificacion, nombre)
 values (last_insert_id(), 'ADMIN01', 'Administrador');
@@ -177,9 +177,9 @@ insert into Caracteristica (nombre, id_padre) values ('HTML', @web);
 insert into Caracteristica (nombre, id_padre) values ('CSS', @web);
 insert into Caracteristica (nombre, id_padre) values ('JavaScript', @web);
 
-/* EMPRESA demo (pendiente) */
+/* EMPRESA demo */
 insert into Usuario (username, clave, rol)
-values ('empresa@correo.com', '$2a$12$PEGAR_HASH_EMPRESA_AQUI', 'EMPRESA');
+values ('empresa@correo.com', '$2a$12$SGGHeK8BBUt5HAp3J0ZqZuQUfyh92QGyY.TwZWLp98zP1ra8o2JS2', 'EMPRESA');
 /* clave 222 */
 
 set @uemp := last_insert_id();
@@ -187,9 +187,9 @@ set @uemp := last_insert_id();
 insert into Empresa (usuario_id, nombre, localizacion, telefono, descripcion, estado_aprobacion)
 values (@uemp, 'Empresa Demo', 'San José', '2222-2222', 'Empresa de ejemplo', 'PENDIENTE');
 
-/* OFERENTE demo (pendiente) */
+/* OFERENTE demo */
 insert into Usuario (username, clave, rol)
-values ('oferente@correo.com', '$2a$12$PEGAR_HASH_OFERENTE_AQUI', 'OFERENTE');
+values ('oferente@correo.com', '$2a$12$iUlQtYXbuBbienG0qMiUsOKbSAl64/zah1YAktj.fo4FRBinqT8j6', 'OFERENTE');
 /* clave 333 */
 
 set @uof := last_insert_id();

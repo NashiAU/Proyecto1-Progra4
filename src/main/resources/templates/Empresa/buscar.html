@@ -1,53 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
-    <title>Prestamo</title>
+<head>
+    <title>Candidatos</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/Styles/styles.css}">
-
-    <link rel="icon" href="/images/favicon.ico">
 </head>
-
-<header th:fragment="header">
+<body>
+<header>
     <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
+        <div class="logo">BolsaEmpleo</div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
+            <a th:href="@{/Empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/Empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/Empresa/publicar}">Publicar puesto</a>
         </div>
     </div>
-
     <div class="nav-right">
         <span th:text="${#authentication.name}"></span>
-        <button class="btn-logout">Salir</button>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
 </header>
-
-<body>
-    <h1>Candidatos</h1>
-
+<main>
     <div class="container">
-        <h3>Juan Pérez</h3>
-        <p>Habilidad: Java - Nivel 4</p>
-        <a href="#">Ver Detalle</a>
+        <div class="title">Candidatos para el puesto</div>
+        <div class="subtitle" th:text="${puesto.descripcionGeneral}"></div>
+
+        <div th:if="${candidatos.isEmpty()}">
+            <p>No se encontraron candidatos que cumplan los requisitos.</p>
+        </div>
+
+        <table th:if="${!candidatos.isEmpty()}">
+            <tr>
+                <th>Oferente</th>
+                <th>Requisitos cumplidos</th>
+                <th>% Coincidencia</th>
+                <th>Acción</th>
+            </tr>
+            <tr th:each="c : ${candidatos}">
+                <td th:text="${c.oferente.nombre + ' ' + c.oferente.primerApellido}"></td>
+                <td th:text="${c.cumplidos + ' / ' + c.total}"></td>
+                <td th:text="${c.porcentaje}"></td>
+                <td>
+                    <a th:href="@{/Empresa/candidatos/{id}(id=${c.oferente.id})}"
+                       class="btn">Ver detalle</a>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+        <a th:href="@{/Empresa/puestos}" id="volver">Volver</a>
     </div>
-
-    <a href="#" id="volver">volver</a>
-</body>
-
-
-<footer th:fragment="footer">
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
-    </div>
-
-    <div>
-        Contacto: info@bolsaempleo.local
-    </div>
-
+</main>
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
+</body>
 </html>

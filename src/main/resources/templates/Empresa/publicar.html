@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Publicar Puesto</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
+</head>
+<body>
+<header>
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+        <div class="nav-links">
+            <a th:href="@{/Empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/Empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/Empresa/publicar}">Publicar puesto</a>
+        </div>
+    </div>
+    <div class="nav-right">
+        <span th:text="${#authentication.name}"></span>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <div class="title">Publicar nuevo puesto</div>
+
+        <form method="post" th:action="@{/Empresa/publicar}">
+            <label>Descripción general:</label><br>
+            <textarea name="descripcionGeneral" rows="3"
+                      style="width:100%;padding:6px;margin-bottom:10px;" required></textarea>
+
+            <label>Salario ofrecido:</label><br>
+            <input type="number" name="salarioOfrecido" step="0.01" required><br>
+
+            <label>Tipo de publicación:</label><br>
+            <select name="tipoPublicacion" style="width:100%;padding:6px;margin-bottom:10px;">
+                <option value="PUBLICO">Público</option>
+                <option value="PRIVADO">Privado</option>
+            </select><br>
+
+            <label>Características requeridas:</label>
+            <div id="caracteristicas-container">
+                <div class="item" style="margin-bottom:8px;">
+                    <select name="caracteristicaIds"
+                            style="padding:6px;margin-right:8px;">
+                        <option th:each="c : ${todas}"
+                                th:value="${c.id}"
+                                th:text="${c.nombre}"></option>
+                    </select>
+                    <label>Nivel mínimo:</label>
+                    <input type="number" name="niveles" min="1" max="5" value="1"
+                           style="width:50px;margin-left:5px;">
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Publicar</button>
+        </form>
+    </div>
+</main>
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
+</footer>
+</body>
+</html>

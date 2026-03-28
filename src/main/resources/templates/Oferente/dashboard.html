@@ -1,59 +1,40 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
-    <title>Prestamo</title>
+<head>
+    <title>Oferente - Dashboard</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/Styles/styles.css}">
-
-    <link rel="icon" href="/images/favicon.ico">
 </head>
-
-<header th:fragment="header">
+<body>
+<header>
     <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
+        <div class="logo">BolsaEmpleo</div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
+            <a th:href="@{/Oferente/dashboard}">Dashboard</a>
+            <a th:href="@{/Oferente/habilidades}">Mis habilidades</a>
+            <a th:href="@{/Oferente/mi_cv}">Mi CV</a>
         </div>
     </div>
-
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
-        <button class="btn-logout">Salir</button>
+        <span th:text="${#authentication.name}"></span>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
 </header>
 
-<body>
-
-
-<div class="container">
-
-    <div class="title">Oferente - Dashboard</div>
-
-    <div class="subtitle">
-       Aprobaciones, catalogo de caracteristicas y reportes
+<main>
+    <div class="container">
+        <div class="title">Oferente - Dashboard</div>
+        <div class="subtitle">Administrá tus habilidades y tu CV.</div>
+        <a th:href="@{/Oferente/habilidades}" class="btn">Mis habilidades</a>
+        <a th:href="@{/Oferente/mi_cv}" class="btn">Mi CV</a>
     </div>
+</main>
 
-    <button class="btn">empresas pendientes</button>
-    <button class="btn">oferentes pendientes</button>
-    <button class="btn">caracteristicas</button>
-    <button class="btn">reportes</button>
-
-</div>
-</body>
-
-
-<footer th:fragment="footer">
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
-    </div>
-
-    <div>
-        Contacto: info@bolsaempleo.local
-    </div>
-
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
+</body>
 </html>

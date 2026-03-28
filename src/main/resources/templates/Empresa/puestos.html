@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Prestamo</title>
+    <title>Mis Puestos</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/Styles/styles.css}">
-
-    <link rel="icon" href="/images/favicon.ico">
 </head>
-
+<body>
 <header>
     <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
+        <div class="logo">BolsaEmpleo</div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
+            <a th:href="@{/Empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/Empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/Empresa/publicar}">Publicar puesto</a>
         </div>
     </div>
-
     <div class="nav-right">
         <span th:text="${#authentication.name}"></span>
-        <button class="btn-logout">Salir</button>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
 </header>
+<main>
+    <div class="container">
+        <div class="title">Mis Puestos</div>
+        <a th:href="@{/Empresa/publicar}" class="btn">Publicar puesto</a>
 
-<body>
-    <h1>Mis Puestos</h1>
+        <div th:if="${puestos.isEmpty()}" style="margin-top:20px;">
+            <p>No tenés puestos publicados aún.</p>
+        </div>
 
-    <table border="1">
-        <tr>
-            <th>Descripción</th>
-            <th>Salario</th>
-            <th>Acciones</th>
-        </tr>
-
-        <tr>
-            <td>Desarrollador Web</td>
-            <td>$1000</td>
-            <td>
-                <a href="#" id="buscar">Buscar candidatos</a>
-                <a href="#" id="desactivar">Desactivar</a>
-            </td>
-        </tr>
-    </table>
-</body>
-
+        <table th:if="${!puestos.isEmpty()}">
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Salario</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+            <tr th:each="p : ${puestos}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.descripcionGeneral}"></td>
+                <td th:text="${p.salarioOfrecido}"></td>
+                <td th:text="${p.activo ? 'Sí' : 'No'}"></td>
+                <td>
+                    <a th:href="@{/Empresa/candidatos/buscar(puestoId=${p.id})}"
+                       id="buscar">Buscar candidatos</a>
+                    <form th:if="${p.activo}"
+                          th:action="@{/Empresa/puestos/desactivar/{id}(id=${p.id})}"
+                          method="post" style="display:inline;">
+                        <button type="submit" id="desactivar">Desactivar</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</main>
 <footer>
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
-    </div>
-
-    <div>
-        Contacto: info@bolsaempleo.local
-    </div>
-
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
+</body>
 </html>

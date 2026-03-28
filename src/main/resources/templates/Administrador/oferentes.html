@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Admin - Dashboard</title>
+    <title>Oferentes Pendientes</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/Styles/styles.css}">
 </head>
@@ -27,12 +27,33 @@
 
 <main>
     <div class="container">
-        <div class="title">Administrador</div>
-        <div class="subtitle">Aprobaciones, catálogo de características y reportes.</div>
-        <a th:href="@{/Administrador/empresas}" class="btn">Empresas pendientes</a>
-        <a th:href="@{/Administrador/oferentes}" class="btn">Oferentes pendientes</a>
-        <a th:href="@{/Administrador/caracteristicas}" class="btn">Características</a>
-        <a th:href="@{/Administrador/reportes}" class="btn">Reportes</a>
+        <div class="title">Oferentes pendientes</div>
+
+        <div th:if="${oferentes.isEmpty()}">
+            <p>No hay oferentes pendientes de aprobación.</p>
+        </div>
+
+        <table th:if="${!oferentes.isEmpty()}">
+            <tr>
+                <th>Correo</th>
+                <th>Nombre</th>
+                <th>Identificación</th>
+                <th>Teléfono</th>
+                <th>Acción</th>
+            </tr>
+            <tr th:each="o : ${oferentes}">
+                <td th:text="${o.usuario.username}"></td>
+                <td th:text="${o.nombre + ' ' + o.primerApellido}"></td>
+                <td th:text="${o.identificacion}"></td>
+                <td th:text="${o.telefono}"></td>
+                <td>
+                    <form th:action="@{/Administrador/oferentes/aprobar/{id}(id=${o.id})}"
+                          method="post" style="display:inline;">
+                        <button type="submit" class="btn">Aprobar</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
     </div>
 </main>
 

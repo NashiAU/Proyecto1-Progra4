@@ -1,19 +1,17 @@
 package com.proyecto1.proyecto1progra4.Logic;
 
-import com.proyecto1.proyecto1progra4.Data.CaracteristicaRepository;
-import com.proyecto1.proyecto1progra4.Data.EmpresaRepository;
-import com.proyecto1.proyecto1progra4.Data.OferenteRepository;
-import com.proyecto1.proyecto1progra4.Data.PuestoRepository;
-import com.proyecto1.proyecto1progra4.Data.UsuariosRepository;
+import com.proyecto1.proyecto1progra4.Data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 @org.springframework.stereotype.Service
 public class Service {
 
+    @Autowired private PuestocaracteristicaRepository puestoCaracteristicaRepo;
     @Autowired private UsuariosRepository usuarios;
     @Autowired private EmpresaRepository empresas;
     @Autowired private OferenteRepository oferentes;
@@ -46,6 +44,37 @@ public class Service {
         if (e.getFechaRegistro() == null) e.setFechaRegistro(Instant.now());
 
         empresas.save(e);
+    }
+
+    public List<Caracteristica> todasLasCaracteristicas() {
+        return caracteristicas.findAll();
+    }
+
+    public List<Puesto> buscarPuestosPublicos(List<Long> caracteristicaIds) {
+        if (caracteristicaIds == null || caracteristicaIds.isEmpty()) {
+            return puestos.findTop5ByTipoPublicacionOrderByFechaRegistroDesc("PUBLICO");
+        }
+        return puestos.findAll().stream()
+                .filter(p -> "PUBLICO".equals(p.getTipoPublicacion()) && p.getActivo())
+                .filter(p -> {
+                    List<Puestocaracteristica> requisitos =
+                            puestoCaracteristicaRepo.findByPuesto(p);
+                    return requisitos.stream()
+                            .anyMatch(r -> caracteristicaIds.contains(r.getCaracteristica().getId()));
+                })
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    @Transactional
+    public void crearCaracteristica(String nombre, Long idPadre) {
+        Caracteristica c = new Caracteristica();
+        c.setNombre(nombre);
+        if (idPadre != null) {
+            Caracteristica padre = caracteristicas.findById(idPadre)
+                    .orElseThrow(() -> new IllegalArgumentException("Padre no existe"));
+            c.setIdPadre(padre);
+        }
+        caracteristicas.save(c);
     }
 
     @Transactional
@@ -82,6 +111,25 @@ public class Service {
         e.setEstadoAprobacion("APROBADO");
         e.setFechaAprobacion(Instant.now());
         empresas.save(e);
+    }
+
+    public Puesto buscarPuestoPorId(Long id) {
+        return puestos.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Puesto no existe: " + id));
+    }
+
+    public List<Puestocaracteristica> requisitosDelPuesto(Long puestoId) {
+        Puesto p = puestos.findById(puestoId)
+                .orElseThrow(() -> new IllegalArgumentException("Puesto no existe"));
+        return puestoCaracteristicaRepo.findByPuesto(p);
+    }
+
+    public Map<Long, List<Puestocaracteristica>> requisitosPorPuestos(List<Puesto> listaPuestos) {
+        Map<Long, List<Puestocaracteristica>> mapa = new java.util.HashMap<>();
+        for (Puesto p : listaPuestos) {
+            mapa.put(p.getId(), puestoCaracteristicaRepo.findByPuesto(p));
+        }
+        return mapa;
     }
 
     @Transactional

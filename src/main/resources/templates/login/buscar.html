@@ -1,55 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
-    <title>Prestamo</title>
+<head>
+    <title>Buscar Puestos</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/Styles/styles.css}">
-
-    <link rel="icon" href="/images/favicon.ico">
 </head>
-
+<body>
 <header>
     <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
+        <div class="logo">BolsaEmpleo</div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/puestos/buscar}">Buscar puestos</a>
+            <a th:href="@{/registro/empresa}">Registro Empresa</a>
+            <a th:href="@{/registro/oferente}">Registro Oferente</a>
         </div>
-</div>
+    </div>
+    <div class="nav-right">
+        <a th:href="@{/login}">Login</a>
+    </div>
 </header>
 
-<body>
-    <h1>Buscar Puestos</h1>
+<main>
+    <div class="container">
+        <div class="title">Buscar puestos por características</div>
 
-    <form method="get" action="/buscar">
-        <label>Palabra clave:</label>
-        <input type="text" name="keyword">
+        <form method="get" th:action="@{/puestos/buscar}">
+            <label>Seleccioná características:</label><br><br>
 
-        <label>Salario mínimo:</label>
-        <input type="number" name="salario">
+            <div th:each="c : ${todas}">
+                <label>
+                    <input type="checkbox"
+                           name="caracteristicaIds"
+                           th:value="${c.id}"
+                           th:text="${c.nombre}">
+                </label><br>
+            </div>
 
-        <button type="submit">Buscar</button>
-    </form>
+            <br>
+            <button type="submit" class="btn">Buscar</button>
+            <a th:href="@{/puestos/buscar}" class="btn">Limpiar</a>
+        </form>
 
-    <div class="puestos">
-        <!-- Resultados -->
+        <br>
+
+        <div th:if="${buscado}">
+            <h3>Resultados</h3>
+
+            <div th:if="${resultados.isEmpty()}">
+                <p>No se encontraron puestos con esas características.</p>
+            </div>
+
+            <div th:each="p : ${resultados}" class="puestos">
+                <h3 th:text="${p.empresa.nombre}"></h3>
+                <p th:text="${p.descripcionGeneral}"></p>
+                <p>Salario: &#8364; <span th:text="${p.salarioOfrecido}"></span></p>
+                <a th:href="@{/puestos/detalle/{id}(id=${p.id})}" class="btn">Ver detalle</a>
+            </div>
+        </div>
+
     </div>
-</body>
+</main>
 
-
-<footer th:fragment="footer">
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
-    </div>
-
-    <div>
-        Contacto: info@bolsaempleo.local
-    </div>
-
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
-
+</body>
 </html>

@@ -1,60 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Login</title>
+    <title>Empresa - Dashboard</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/Styles/styles.css}">
-
-    <link rel="icon" href="/images/favicon.ico">
 </head>
-
+<body>
 <header>
-
     <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
+        <div class="logo">BolsaEmpleo</div>
         <div class="nav-links">
             <a th:href="@{/Empresa/dashboard}">Dashboard</a>
             <a th:href="@{/Empresa/puestos}">Mis puestos</a>
-            <a th:href="@{/Empresa/buscar}">Publicar puesto</a>
+            <a th:href="@{/Empresa/publicar}">Publicar puesto</a>
         </div>
     </div>
-
     <div class="nav-right">
         <span th:text="${#authentication.name}"></span>
-        <button class="btn-logout">Salir</button>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
-
 </header>
-<body>
-
-<div class="container">
-
-    <div class="title">Empresa - Dashboard</div>
-
-    <div class="subtitle">
-        Desde aquí podés administrar tus puestos y buscar candidatos.
+<main>
+    <div class="container">
+        <div class="title">Empresa - Dashboard</div>
+        <div class="subtitle">Administrá tus puestos y buscá candidatos.</div>
+        <a th:href="@{/Empresa/puestos}" class="btn">Ver mis puestos</a>
+        <a th:href="@{/Empresa/publicar}" class="btn">Publicar nuevo puesto</a>
     </div>
-
-    <button class="btn">Ver mis puestos</button>
-    <button class="btn">Publicar nuevo puesto</button>
-
-</div>
-</body>
-
+</main>
 <footer>
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
-    </div>
-
-    <div>
-        Contacto: info@bolsaempleo.local
-    </div>
-
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
-
-
+</body>
 </html>

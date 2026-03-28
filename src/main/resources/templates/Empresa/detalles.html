@@ -1,55 +1,62 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
-    <title>Prestamo</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
-
-    <link rel="icon" href="/images/favicon.ico">
-</head>
-
-<header th:fragment="header">
-    <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
-        <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
-        </div>
-    </div>
-
-    <div class="nav-right">
-        <span th:text="${#authentication.name}"></span>
-        <button class="btn-logout">Salir</button>
-    </div>
-</header>
-
-<!DOCTYPE html>
-<html>
 <head>
     <title>Detalle Candidato</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
 </head>
 <body>
-    <h1>Detalle del Candidato</h1>
-
-    <p>Nombre: Juan Pérez</p>
-    <p>Email: juan@email.com</p>
-
-    <a href="#" id="volver">volver</a>
-</body>
-</html>
-
-<footer th:fragment="footer">
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
+<header>
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+        <div class="nav-links">
+            <a th:href="@{/Empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/Empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/Empresa/publicar}">Publicar puesto</a>
+        </div>
     </div>
-
-    <div>
-        Contacto: info@bolsaempleo.local
+    <div class="nav-right">
+        <span th:text="${#authentication.name}"></span>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
+</header>
+<main>
+    <div class="container">
+        <div class="title">Detalle de oferente</div>
 
+        <p><strong th:text="${oferente.nombre + ' ' + oferente.primerApellido}"></strong></p>
+        <p>Identificación: <span th:text="${oferente.identificacion}"></span></p>
+        <p>Email: <span th:text="${oferente.usuario.username}"></span></p>
+        <p>Teléfono: <span th:text="${oferente.telefono}"></span></p>
+        <p>Residencia: <span th:text="${oferente.lugarResidencia}"></span></p>
+
+        <h3>Habilidades</h3>
+        <table>
+            <tr>
+                <th>Característica</th>
+                <th>Nivel</th>
+            </tr>
+            <tr th:each="h : ${habilidades}">
+                <td th:text="${h.caracteristica.nombre}"></td>
+                <td th:text="${h.nivel}"></td>
+            </tr>
+        </table>
+
+        <br>
+        <div th:if="${oferente.cvPath != null}">
+            <a th:href="@{/Empresa/candidatos/cv/{id}(id=${oferente.id})}"
+               class="btn">Ver CV</a>
+        </div>
+
+        <br>
+        <a th:href="@{/Empresa/puestos}" id="volver">Volver</a>
+    </div>
+</main>
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
+</body>
 </html>

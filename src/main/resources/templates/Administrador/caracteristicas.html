@@ -1,56 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
-    <title>Prestamo</title>
+<head>
+    <title>Características</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/Styles/styles.css}">
-
-    <link rel="icon" href="/images/favicon.ico">
 </head>
-
-<header th:fragment="header">
+<body>
+<header>
     <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
+        <div class="logo">BolsaEmpleo</div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
+            <a th:href="@{/Administrador/dashboard}">Dashboard</a>
+            <a th:href="@{/Administrador/empresas}">Empresas pendientes</a>
+            <a th:href="@{/Administrador/oferentes}">Oferentes pendientes</a>
+            <a th:href="@{/Administrador/caracteristicas}">Características</a>
+            <a th:href="@{/Administrador/reportes}">Reportes</a>
         </div>
     </div>
-
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
-        <button class="btn-logout">Salir</button>
+        <span th:text="${#authentication.name}"></span>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
 </header>
 
-<body>
-    <h1>Características</h1>
+<main>
+    <div class="container">
+        <div class="title">Características</div>
+        <div class="contenedor">
 
-    <a href="/admin/caracteristicas/nueva">Agregar</a>
+            <!-- COLUMNA 1: árbol de características -->
+            <div class="habilidades">
+                <h3>Categorías registradas</h3>
+                <ul th:each="raiz : ${raices}">
+                    <li th:text="${raiz.nombre}"></li>
+                </ul>
+            </div>
 
-    <ul>
-        <li>Lenguajes de Programación
-            <ul>
-                <li>Java</li>
-                <li>C#</li>
-            </ul>
-        </li>
-    </ul>
-</body>
+            <!-- COLUMNA 2: formulario agregar -->
+            <div class="ingresar">
+                <h3>Agregar característica</h3>
+                <form method="post" th:action="@{/Administrador/caracteristicas/crear}">
+                    <label>Nombre:</label>
+                    <input type="text" name="nombre" required>
 
-<footer th:fragment="footer">
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
+                    <label>Padre (opcional):</label>
+                    <select name="idPadre" style="width:100%; padding:6px; margin-bottom:10px;">
+                        <option value="">-- Sin padre (raíz) --</option>
+                        <option th:each="c : ${todas}"
+                                th:value="${c.id}"
+                                th:text="${c.nombre}"></option>
+                    </select>
+
+                    <button type="submit" class="btn">Crear</button>
+                </form>
+            </div>
+
+        </div>
     </div>
+</main>
 
-    <div>
-        Contacto: info@bolsaempleo.local
-    </div>
-
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
-
+</body>
 </html>

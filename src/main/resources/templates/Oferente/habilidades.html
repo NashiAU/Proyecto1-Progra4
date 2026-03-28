@@ -1,77 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head th:fragment="head">
-    <title>Prestamo</title>
+<head>
+    <title>Mis Habilidades</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/Styles/styles.css}">
-
-    <link rel="icon" href="/images/favicon.ico">
 </head>
-
-<header th:fragment="header">
+<body>
+<header>
     <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
+        <div class="logo">BolsaEmpleo</div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
+            <a th:href="@{/Oferente/dashboard}">Dashboard</a>
+            <a th:href="@{/Oferente/habilidades}">Mis habilidades</a>
+            <a th:href="@{/Oferente/mi_cv}">Mi CV</a>
         </div>
     </div>
-
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
-        <button class="btn-logout">Salir</button>
+        <span th:text="${#authentication.name}"></span>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
 </header>
 
-<body>
-    <h1>Mis Habilidades</h1>
+<main>
+    <div class="container">
+        <div class="title">Mis Habilidades</div>
+        <div class="contenedor">
 
-    <div class="habilidades">
-        <div>
-            <span>Java - Nivel 4</span>
-            <button>Eliminar</button>
+            <div class="habilidades">
+                <h3>Habilidades registradas</h3>
+                <div th:if="${misHabilidades.isEmpty()}">
+                    <p>No tenés habilidades registradas aún.</p>
+                </div>
+                <div th:each="h : ${misHabilidades}" class="item">
+                    <span th:text="${h.caracteristica.nombre + ' - Nivel ' + h.nivel}"></span>
+                    <form method="post" th:action="@{/Oferente/habilidades/eliminar}" style="display:inline;">
+                        <input type="hidden" name="oferenteId" th:value="${h.id.oferenteId}">
+                        <input type="hidden" name="caracteristicaId" th:value="${h.id.caracteristicaId}">
+                        <input type="hidden" name="actualId" th:value="${actualId}">
+                        <button type="submit" class="eliminar">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="ruta">
+                <h3>Explorar categorías</h3>
+                <div>
+                    <a th:href="@{/Oferente/habilidades}">Raíces</a>
+                    <span th:each="r : ${ruta}">
+                        / <a th:href="@{/Oferente/habilidades(actualId=${r.id})}"
+                             th:text="${r.nombre}"></a>
+                    </span>
+                </div>
+
+                <br>
+                <div th:each="sub : ${subcategorias}">
+                    <div th:if="${conHijos.contains(sub.id)}">
+                        <a th:href="@{/Oferente/habilidades(actualId=${sub.id})}"
+                           th:text="${sub.nombre}"></a>
+                    </div>
+                    <div th:if="${!conHijos.contains(sub.id)}">
+                        <span th:text="${sub.nombre}"></span>
+                        <form method="post" th:action="@{/Oferente/habilidades/agregar}" style="display:inline;">
+                            <input type="hidden" name="caracteristicaId" th:value="${sub.id}">
+                            <input type="hidden" name="actualId" th:value="${actualId}">
+                            <label>Nivel:</label>
+                            <input type="number" name="nivel" min="1" max="5" value="3"
+                                   style="width:50px; margin:0 5px;">
+                            <button type="submit" class="btn">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div>
-            <span>Python - Nivel 3</span>
-            <button>Eliminar</button>
-        </div>
-
-    <div class="ruta">
-        <button id="btn">raices</button>
-
-        <p>subcategoria</p>
-
-        <div >
-            <h1>subcategoria</h1>
-        </div>
-
     </div>
+</main>
 
-    <form method="post" action="/oferente/habilidades" class="ingresar">
-        <label>Habilidad:</label>
-        <input type="text" name="habilidad">
-
-        <label>Nivel:</label>
-        <input type="number" name="nivel" min="1" max="5">
-
-        <button type="submit">Agregar</button>
-    </form>
-</body>
-
-
-<footer th:fragment="footer">
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
-    </div>
-
-    <div>
-        Contacto: info@bolsaempleo.local
-    </div>
-
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
+</body>
 </html>

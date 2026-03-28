@@ -22,45 +22,15 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 
                 .authorizeHttpRequests(auth -> auth
-                        // ===== RUTAS PÚBLICAS =====
                         .requestMatchers(
-                                "/",
-                                "/home",
-                                "/login",
-                                "/login**",
-                                "/dologin",
-                                "/error",
-                                "/notAuthorized",
-                                "/Administrador/**",
-                                "/Empresa/**",
-                                "/Oferente/**",
-                                "/css/**", "/Styles/**", "/images/**"
+                                "/", "/home", "/login", "/login**", "/doLogin",
+                                "/registro/**", "/puestos/**",
+                                "/error", "/notAuthorized",
+                                "/css/**", "/Styles/**", "/images/**", "/cvs/**"
                         ).permitAll()
-
-
-                        // Si estas son las URLs reales de tu app (ojo: parecen nombres de paquete),
-                        // entonces déjalas así. Si no lo son, cámbialas por /prestamos/list etc.
-                        .requestMatchers(
-                                "/com/proyecto1/proyecto1progra4/presentation/prestamos/list",
-                                "/com/proyecto1/proyecto1progra4/presentation/prestamos/search"
-                        ).permitAll()
-
-                        // ===== REQUIERE AUTORIDAD ADM (módulo préstamos) =====
-                        .requestMatchers(
-                                "/com/proyecto1/proyecto1progra4/presentation/prestamos/show",
-                                "/com/proyecto1/proyecto1progra4/presentation/prestamos/create",
-                                "/com/proyecto1/proyecto1progra4/presentation/prestamos/edit/**",
-                                "/com/proyecto1/proyecto1progra4/presentation/prestamos/delete/**",
-                                "/com/proyecto1/proyecto1progra4/presentation/prestamos/update"
-                        ).hasAuthority("ADM")
-
-                        // ===== RUTAS PROTEGIDAS POR ROL =====
-                        // Corregido: "Admintrador" -> "Administrador" y se usa /** para cubrir subrutas
                         .requestMatchers("/Administrador/**").hasAuthority("ADMIN")
                         .requestMatchers("/Empresa/**").hasAuthority("EMPRESA")
                         .requestMatchers("/Oferente/**").hasAuthority("OFERENTE")
-
-                        // ===== TODO LO DEMÁS REQUIERE LOGIN =====
                         .anyRequest().authenticated()
                 )
 

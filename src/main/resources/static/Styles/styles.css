@@ -224,3 +224,47 @@ form button{
 form button:hover{
     background-color: #34495e;
 }
+
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+.puesto-card {
+    position: relative;
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: inline-block;
+    width: 220px;
+    vertical-align: top;
+    margin-right: 15px;
+}
+
+.puesto-tooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #1f2933;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 5px;
+    z-index: 100;
+    min-width: 200px;
+    font-size: 13px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.puesto-card:hover .puesto-tooltip {
+    display: block;
+}
+
+.puestos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
