@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Prestamo</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="../../static/Styles/styles.css">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
 </head>
 
 <header>
@@ -14,16 +15,14 @@
     <div class="logo">BolsaEmpleo</div>
 
         <div class="nav-links">
-            <a th:href="@{/Administrador/dashboard}">Dashboard</a>
-            <a th:href="@{/Administrador/empresas}">Empresas pendientes</a>
-            <a th:href="@{/Administrador/oferentes}">Oferentes pendientes</a>
-            <a th:href="@{/Administrador/caracteristicas}">Características</a>
-            <a th:href="@{/Administrador/reportes}">Reportes</a>
+            <a href="#">Dashboard</a>
+            <a href="#">Mis puestos</a>
+            <a href="#">Publicar puesto</a>
         </div>
     </div>
 
     <div class="nav-right">
-        <span th:text="${#authentication.name}"></span>
+        <span>websoft@tuorg.com</span>
         <button class="btn-logout">Salir</button>
     </div>
 
@@ -34,8 +33,8 @@
 
     <div class="title">Empresa - Dashboard</div>
 
-    <div class="subtitle">
-        Aprobaciones, catalogo de caracteristicas y reportes
+   <div class="subtitle">
+       Aprobaciones, catalogo de caracteristicas y reportes
     </div>
 
     <button class="btn">empresas pendientes</button>

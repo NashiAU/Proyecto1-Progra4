@@ -1,56 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Prestamos</title>
+    <title>Bolsa de Empleo</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/Styles/styles.css">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
 </head>
-<header>
-
-    <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
-        <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
-        </div>
-    </div>
-
-    <div class="nav-right">
-        <span>websoft@tuorg.com</span>
-        <button class="btn-logout">Salir</button>
-    </div>
-
-</header>
 <body>
-    <h1>Puestos Recientes</h1>
-
-    <div>
-        <!-- Repetir con Thymeleaf -->
-        <div class="puestos">
-            <h3>Desarrollador Java</h3>
-            <p>Empresa: TechCorp</p>
-            <p>Salario: $1200</p>
+<header>
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+        <div class="nav-links">
+            <a th:href="@{/puestos/buscar}">Buscar puestos</a>
+            <a th:href="@{/registro/empresa}">Registro Empresa</a>
+            <a th:href="@{/registro/oferente}">Registro Oferente</a>
         </div>
     </div>
+    <div class="nav-right">
+        <a th:href="@{/login}">Login</a>
+    </div>
+</header>
 
-    <a href="/login">Iniciar Sesión</a>
-    <a href="/registro">Registrarse</a>
-</body>
+<main>
+    <div class="container">
+        <div class="title">Bolsa de Empleo</div>
+        <div class="subtitle">Últimos 5 puestos públicos</div>
+
+        <div th:each="puesto : ${puestos}" class="puestos">
+            <h3 th:text="${puesto.empresa.nombre}">Empresa</h3>
+            <p th:text="${puesto.descripcionGeneral}">Descripción</p>
+            <p>&#8364; <span th:text="${puesto.salarioOfrecido}">0.00</span></p>
+            <a th:href="@{/puestos/detalle/{id}(id=${puesto.id})}" class="btn">Ver detalle</a>
+        </div>
+    </div>
+</main>
 
 <footer>
-    <div>
-        <b>Bolsa de Empleo</b><br>
-        Total Soft Inc.
-    </div>
-
-    <div>
-        Contacto: info@bolsaempleo.local
-    </div>
-
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
 </footer>
-
-
-</html>
+</body>
+</html></html>
