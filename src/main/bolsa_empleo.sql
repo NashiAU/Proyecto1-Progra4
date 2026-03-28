@@ -159,7 +159,7 @@ create table OferenteHabilidad (
 /* ADMIN demo */
 insert into Usuario (username, clave, rol)
 values ('ADMIN01', '$2a$12$PEGAR_HASH_ADMIN_AQUI', 'ADMIN');
-/* clave 111 */
+/*correo: administrador@correo.com clave 111 */
 
 insert into Admin (usuario_id, identificacion, nombre)
 values (last_insert_id(), 'ADMIN01', 'Administrador');

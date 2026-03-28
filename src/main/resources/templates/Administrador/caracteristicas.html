@@ -14,14 +14,14 @@
     <div class="logo">BolsaEmpleo</div>
 
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
+            <a th:href="@{/Administrador/dashboard}">Dashboard</a>
+            <a th:href="@{/Administrador/dashboard}">Mis puestos</a>
             <a href="#">Publicar puesto</a>
         </div>
     </div>
 
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
+        <span th:text="${#authentication.name}"></span>
         <button class="btn-logout">Salir</button>
     </div>
 </header>

@@ -11,56 +11,100 @@
 
 <header th:fragment="header">
     <div class="nav-left">
-    <div class="logo">BolsaEmpleo</div>
-
+        <div class="logo">BolsaEmpleo</div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis habilidades</a>
-            <a href="#">Mi CV</a>
+            <a th:href="@{/Oferente/dashboard}">Dashboard</a>
+            <a th:href="@{/Oferente/habilidades}">Mis habilidades</a>
+            <a th:href="@{/Oferente/mi_cv}">Mi CV</a>
         </div>
     </div>
-
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
-        <button class="btn-logout">Salir</button>
+        <span th:text="${#authentication.name}"></span>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
 </header>
 
-<body>
+<main>
     <h1>Mis Habilidades</h1>
 
-    <div class="habilidades">
-        <div>
-            <span>Java - Nivel 4</span>
-            <button>Eliminar</button>
+    <div style="display:flex; gap:20px;">
+
+        <div style="flex:1;">
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>Nivel</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="h : ${misHabilidades}">
+                    <td th:text="${h.caracteristica.nombre}"></td>
+                    <td th:text="${h.nivel}"></td>
+                    <td>
+                        <form method="post" th:action="@{/Oferente/habilidades/eliminar}">
+                            <input type="hidden" name="oferenteId" th:value="${h.oferente.id}">
+                            <input type="hidden" name="caracteristicaId" th:value="${h.caracteristica.id}">
+                            <input type="hidden" name="actualId" th:value="${actualId}">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div>
-            <span>Python - Nivel 3</span>
-            <button>Eliminar</button>
+
+
+        <div style="flex:1;">
+            <div>
+                <a th:href="@{/Oferente/habilidades}">Raíces</a>
+                <span th:each="r : ${ruta}">
+            / <a th:href="@{/Oferente/habilidades(actualId=${r.id})}" th:text="${r.nombre}"></a>
+        </span>
+            </div>
+            <div th:each="sub : ${subcategorias}">
+                <!-- Si tiene hijos: link para navegar -->
+                <span th:if="${conHijos.contains(sub.id)}">
+            <a th:href="@{/Oferente/habilidades(actualId=${sub.id})}" th:text="${sub.nombre}"></a>
+        </span>
+                <!-- Si no tiene hijos: botón para seleccionar en el dropdown -->
+                <span th:unless="${conHijos.contains(sub.id)}">
+            <span th:text="${sub.nombre}"></span>
+            <button type="button"
+                    th:onclick="|document.getElementById('caracteristicaSelect').value='${sub.id}'|">
+                Seleccionar
+            </button>
+        </span>
+            </div>
         </div>
 
-    <div class="ruta">
-        <button id="btn">raices</button>
 
-        <p>subcategoria</p>
-
-        <div >
-            <h1>subcategoria</h1>
+        <div style="flex:1;">
+            <h3>Agregar Habilidad</h3>
+            <form method="post" th:action="@{/Oferente/habilidades/agregar}">
+                <label>Característica:</label>
+                <select name="caracteristicaId" id="caracteristicaSelect">
+                    <option th:each="c : ${todasCaracteristicas}"
+                            th:value="${c.id}"
+                            th:text="${c.nombre}">
+                    </option>
+                </select>
+                <br><br>
+                <label>Nivel (1-5):</label>
+                <input type="number" name="nivel" min="1" max="5" value="1">
+                <input type="hidden" name="actualId" th:value="${actualId}">
+                <br><br>
+                <button type="submit">Agregar</button>
+            </form>
         </div>
 
     </div>
+</main>
 
-    <form method="post" action="/oferente/habilidades" class="ingresar">
-        <label>Habilidad:</label>
-        <input type="text" name="habilidad">
-
-        <label>Nivel:</label>
-        <input type="number" name="nivel" min="1" max="5">
-
-        <button type="submit">Agregar</button>
-    </form>
 </body>
-
 
 <footer th:fragment="footer">
     <div>

@@ -14,14 +14,16 @@
     <div class="logo">BolsaEmpleo</div>
 
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Mis puestos</a>
-            <a href="#">Publicar puesto</a>
+            <a th:href="@{/Administrador/dashboard}">Dashboard</a>
+            <a th:href="@{/Administrador/empresas}">Empresas pendientes</a>
+            <a th:href="@{/Administrador/oferentes}">Oferentes pendientes</a>
+            <a th:href="@{/Administrador/caracteristicas}">Características</a>
+            <a th:href="@{/Administrador/reportes}">Reportes</a>
         </div>
     </div>
 
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
+        <span th:text="${#authentication.name}"></span>
         <button class="btn-logout">Salir</button>
     </div>
 
@@ -32,8 +34,8 @@
 
     <div class="title">Empresa - Dashboard</div>
 
-   <div class="subtitle">
-       Aprobaciones, catalogo de caracteristicas y reportes
+    <div class="subtitle">
+        Aprobaciones, catalogo de caracteristicas y reportes
     </div>
 
     <button class="btn">empresas pendientes</button>

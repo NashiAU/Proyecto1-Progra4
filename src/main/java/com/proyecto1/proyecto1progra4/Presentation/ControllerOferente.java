@@ -1,8 +1,12 @@
 package com.proyecto1.proyecto1progra4.Presentation;
 
-
+import com.proyecto1.proyecto1progra4.Data.CaracteristicaRepository;
 import com.proyecto1.proyecto1progra4.Data.OferenteRepository;
+import com.proyecto1.proyecto1progra4.Data.OferentehabilidadRepository;
+import com.proyecto1.proyecto1progra4.Logic.Caracteristica;
 import com.proyecto1.proyecto1progra4.Logic.Oferente;
+import com.proyecto1.proyecto1progra4.Logic.Oferentehabilidad;
+import com.proyecto1.proyecto1progra4.Logic.OferentehabilidadId;
 import com.proyecto1.proyecto1progra4.Security.UserDetailsImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ControllerOferente {
@@ -22,7 +29,16 @@ public class ControllerOferente {
     @Autowired
     private OferenteRepository oferenteRepository;
 
+    @Autowired
+    private OferentehabilidadRepository habilidadRepository;
+
+    @Autowired
+    private CaracteristicaRepository caracteristicaRepository;
+
     private static final String CARPETA_CVS = "src/main/resources/static/cvs/";
+
+    @GetMapping("/Oferente/dashboard")
+    public String oferente() { return "Oferente/dashboard"; }
 
     @GetMapping("/Oferente/mi_cv")
     public String verCV(@AuthenticationPrincipal UserDetailsImp userDetails, Model model) {
@@ -99,4 +115,86 @@ public class ControllerOferente {
                 .contentType(org.springframework.http.MediaType.APPLICATION_PDF)
                 .body(resource);
     }
+
+
+    @GetMapping("/Oferente/habilidades")
+    public String verHabilidades(@AuthenticationPrincipal UserDetailsImp userDetails,
+                                 @RequestParam(value = "actualId", required = false) Long actualId,
+                                 Model model) {
+
+        Oferente oferente = oferenteRepository.findByUsuario(userDetails.getUsuario())
+                .orElse(null);
+
+        List<Oferentehabilidad> misHabilidades = habilidadRepository.findByOferente(oferente);
+        model.addAttribute("misHabilidades", misHabilidades);
+
+        if (actualId == null) {
+            List<Caracteristica> raices = caracteristicaRepository.findRaices();
+            model.addAttribute("subcategorias", raices);
+            model.addAttribute("ruta", new ArrayList<>());
+            model.addAttribute("actualId", null);
+        } else {
+            List<Caracteristica> hijos = caracteristicaRepository.findByIdPadre(actualId);
+            model.addAttribute("subcategorias", hijos);
+
+            List<Caracteristica> ruta = new ArrayList<>();
+            Caracteristica actual = caracteristicaRepository.findById(actualId).orElse(null);
+            while (actual != null) {
+                ruta.add(0, actual);
+                actual = actual.getIdPadre();
+            }
+            model.addAttribute("ruta", ruta);
+            model.addAttribute("actualId", actualId);
+        }
+
+        model.addAttribute("todasCaracteristicas", caracteristicaRepository.findAll());
+
+        Set<Long> conHijos = caracteristicaRepository.findAll().stream()
+                .filter(c -> c.getIdPadre() != null)
+                .map(c -> c.getIdPadre().getId())
+                .collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("conHijos", conHijos);
+
+        return "Oferente/habilidades";
+    }
+
+    @PostMapping("/Oferente/habilidades/agregar")
+    public String agregarHabilidad(@AuthenticationPrincipal UserDetailsImp userDetails,
+                                   @RequestParam("caracteristicaId") Long caracteristicaId,
+                                   @RequestParam("nivel") Integer nivel,
+                                   @RequestParam(value = "actualId", required = false) Long actualId) {
+
+        Oferente oferente = oferenteRepository.findByUsuario(userDetails.getUsuario())
+                .orElseThrow(() -> new RuntimeException("Oferente no encontrado"));
+
+        OferentehabilidadId habId = new OferentehabilidadId();
+        habId.setOferenteId(oferente.getId());
+        habId.setCaracteristicaId(caracteristicaId);
+
+        Oferentehabilidad habilidad = new Oferentehabilidad();
+        habilidad.setId(habId);
+        habilidad.setOferente(oferente);
+        habilidad.setCaracteristica(caracteristicaRepository.findById(caracteristicaId)
+                .orElseThrow(() -> new RuntimeException("Característica no encontrada")));
+        habilidad.setNivel(nivel);
+
+        habilidadRepository.save(habilidad);
+
+        return "redirect:/Oferente/habilidades" + (actualId != null ? "?actualId=" + actualId : "");
+    }
+
+    @PostMapping("/Oferente/habilidades/eliminar")
+    public String eliminarHabilidad(@RequestParam("oferenteId") Long oferenteId,
+                                    @RequestParam("caracteristicaId") Long caracteristicaId,
+                                    @RequestParam(value = "actualId", required = false) Long actualId) {
+
+        OferentehabilidadId habId = new OferentehabilidadId();
+        habId.setOferenteId(oferenteId);
+        habId.setCaracteristicaId(caracteristicaId);
+
+        habilidadRepository.deleteById(habId);
+
+        return "redirect:/Oferente/habilidades" + (actualId != null ? "?actualId=" + actualId : "");
+    }
+
 }

@@ -122,7 +122,7 @@ public class Service {
     // =========================
     public List<Caracteristica> caracteristicasRaiz() {
         // raíces: idPadre = null
-        return caracteristicas.findByIdPadre(null);
+        return caracteristicas.findRaices();
     }
 
     public List<Caracteristica> caracteristicasHijas(Long idPadre) {

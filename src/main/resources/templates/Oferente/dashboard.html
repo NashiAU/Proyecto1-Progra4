@@ -21,7 +21,7 @@
     </div>
 
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
+        <span th:text="${#authentication.name}"></span>
         <button class="btn-logout">Salir</button>
     </div>
 </header>
@@ -36,11 +36,8 @@
     <div class="subtitle">
        Aprobaciones, catalogo de caracteristicas y reportes
     </div>
-
-    <button class="btn">empresas pendientes</button>
-    <button class="btn">oferentes pendientes</button>
-    <button class="btn">caracteristicas</button>
-    <button class="btn">reportes</button>
+    <button class="btn">mis habilidades</button>
+    <button class="btn">mi CV</button>
 
 </div>
 </body>

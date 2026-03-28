@@ -18,12 +18,12 @@
         <div class="nav-links">
             <a th:href="@{/Empresa/dashboard}">Dashboard</a>
             <a th:href="@{/Empresa/puestos}">Mis puestos</a>
-            <a th:href="@{/Empresa/publicar}">Publicar puesto</a>
+            <a th:href="@{/Empresa/buscar}">Publicar puesto</a>
         </div>
     </div>
 
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
+        <span th:text="${#authentication.name}"></span>
         <button class="btn-logout">Salir</button>
     </div>
 

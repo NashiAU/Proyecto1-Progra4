@@ -20,7 +20,7 @@
     </div>
 
     <div class="nav-right">
-        <span>websoft@tuorg.com</span>
+        <span th:text="${#authentication.name}"></span>
         <button class="btn-logout">Salir</button>
     </div>
 </header>
@@ -31,12 +31,11 @@
     <h1>Mi CV</h1>
     <div class="container">
 
-        <!-- Mensaje de éxito -->
         <div th:if="${mensaje}" style="color:green; margin-bottom:10px;" th:text="${mensaje}"></div>
-        <!-- Mensaje de error -->
+
         <div th:if="${error}" style="color:red; margin-bottom:10px;" th:text="${error}"></div>
 
-        <!-- CV actual -->
+
         <div th:if="${cvActual != null}">
             <p>CV actual: <strong th:text="${cvActual}"></strong></p>
             <a th:href="@{/Oferente/mi_cv/descargar}">Descargar CV</a>
@@ -45,7 +44,6 @@
             <p>No tenés ningún CV subido todavía.</p>
         </div>
 
-        <!-- Formulario para subir -->
         <hr>
         <h3>Subir nuevo CV</h3>
         <form method="post" th:action="@{/Oferente/mi_cv/subir}" enctype="multipart/form-data">
