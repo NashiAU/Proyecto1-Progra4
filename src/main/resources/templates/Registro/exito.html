@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registro recibido</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
+</head>
+<body>
+<header>
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+        <div class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/puestos/buscar}">Buscar puestos</a>
+        </div>
+    </div>
+    <div class="nav-right">
+        <a th:href="@{/login}">Login</a>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="title">Registro recibido</div>
+
+        <p th:if="${tipo == 'empresa'}">
+            Tu solicitud de registro como <b>Empresa</b> fue recibida. Un administrador debe aprobarla para que puedas iniciar sesión.
+        </p>
+        <p th:if="${tipo == 'oferente'}">
+            Tu solicitud de registro como <b>Oferente</b> fue recibida. Un administrador debe aprobarla para que puedas iniciar sesión.
+        </p>
+
+        <a th:href="@{/home}" class="btn">Volver al inicio</a>
+    </div>
+</main>
+
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
+</footer>
+</body>
+</html>

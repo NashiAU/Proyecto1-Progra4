@@ -45,9 +45,13 @@
         </table>
 
         <br>
-        <div th:if="${oferente.cvPath != null}">
-            <a th:href="@{/Empresa/candidatos/cv/{id}(id=${oferente.id})}"
-               class="btn">Ver CV</a>
+        <div th:if="${tieneCv}">
+            <a th:href="@{/Empresa/candidatos/cv/{id}(id=${oferente.id})}" class="btn">Ver CV</a>
+            <a th:href="@{/Empresa/candidatos/cv/{id}(id=${oferente.id},download=1)}" class="btn">Descargar CV</a>
+        </div>
+
+        <div th:if="${!tieneCv}">
+            <p><b>Este candidato no ha subido su currículum.</b></p>
         </div>
 
         <br>

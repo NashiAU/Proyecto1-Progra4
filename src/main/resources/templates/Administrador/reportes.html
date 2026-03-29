@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reportes</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
+</head>
+<body>
+<header>
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+        <div class="nav-links">
+            <a th:href="@{/Administrador/dashboard}">Dashboard</a>
+            <a th:href="@{/Administrador/empresas}">Empresas pendientes</a>
+            <a th:href="@{/Administrador/oferentes}">Oferentes pendientes</a>
+            <a th:href="@{/Administrador/caracteristicas}">Características</a>
+            <a th:href="@{/Administrador/reportes}">Reportes</a>
+        </div>
+    </div>
+    <div class="nav-right">
+        <span th:text="${#authentication.name}"></span>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="title">Reportes</div>
+        <div class="subtitle">Descarga reportes administrativos (PDF).</div>
+
+        <h3>Puestos por mes</h3>
+        <form method="get" th:action="@{/Administrador/reportes/puestos-por-mes.pdf}">
+            <label>Año:</label>
+            <input type="number" name="anio" th:value="${anioActual}" min="2000" max="2100" required>
+            <button type="submit" class="btn">Generar PDF</button>
+        </form>
+
+        <br>
+
+        <h3>Empresas</h3>
+        <a th:href="@{/Administrador/reportes/empresas.pdf}" class="btn">Generar PDF (Pendientes / Aprobadas)</a>
+
+        <br><br>
+
+        <h3>Oferentes</h3>
+        <a th:href="@{/Administrador/reportes/oferentes.pdf}" class="btn">Generar PDF (Pendientes / Aprobados)</a>
+    </div>
+</main>
+
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
+</footer>
+</body>
+</html>

@@ -18,7 +18,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Recomendado en apps SSR con login por formulario:
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 
                 .authorizeHttpRequests(auth -> auth
@@ -54,7 +53,6 @@ public class SecurityConfig {
                         .accessDeniedPage("/notAuthorized")
                 )
 
-                // Si no estás usando CSRF tokens en forms, esto evita bloqueos.
                 .csrf(csrf -> csrf.disable());
 
         return http.build();

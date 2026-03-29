@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registro</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
+</head>
+<body>
+<header>
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+        <div class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/puestos/buscar}">Buscar puestos</a>
+        </div>
+    </div>
+    <div class="nav-right">
+        <a th:href="@{/login}">Login</a>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="title">Registro</div>
+        <div class="subtitle">Seleccioná qué tipo de cuenta querés crear.</div>
+
+        <a th:href="@{/registro/empresa}" class="btn">Registrar Empresa</a>
+        <a th:href="@{/registro/oferente}" class="btn">Registrar Oferente</a>
+    </div>
+</main>
+
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
+</footer>
+</body>
+</html>

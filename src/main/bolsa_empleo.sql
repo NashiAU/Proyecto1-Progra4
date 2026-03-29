@@ -152,64 +152,142 @@ create table OferenteHabilidad (
 );
 
 /* =========================================================
-   INSERTS DEMO
-   Reemplazá los hashes por los tuyos (HashTest.java).
+   DEMO DATA (3 de cada cosa)
+   Usa el mismo hash para todos (clave: 111)
    ========================================================= */
 
-/* ADMIN demo */
-insert into Usuario (username, clave, rol)
-values ('administrador@correo.com', '$2a$12$esH9VOmi2lwFmh60ZH.Zo.kn3QTJ9DlbCfo7SuTABopgSai.EiO8O', 'ADMIN');
-/* clave 111 */
+SET @HASH_111 := '$2a$12$esH9VOmi2lwFmh60ZH.Zo.kn3QTJ9DlbCfo7SuTABopgSai.EiO8O';
 
-insert into Admin (usuario_id, identificacion, nombre)
-values (last_insert_id(), 'ADMIN01', 'Administrador');
+/* =========================
+   3 ADMINS
+   ========================= */
+insert into Usuario (username, clave, rol) values ('administrador@correo.com', @HASH_111, 'ADMIN');
+set @u_admin1 := last_insert_id();
+insert into Admin (usuario_id, identificacion, nombre) values (@u_admin1, 'ADMIN01', 'Administrador 1');
+set @admin1 := last_insert_id();
 
-/* Características jerárquicas demo */
+insert into Usuario (username, clave, rol) values ('admin2@correo.com', @HASH_111, 'ADMIN');
+set @u_admin2 := last_insert_id();
+insert into Admin (usuario_id, identificacion, nombre) values (@u_admin2, 'ADMIN02', 'Administrador 2');
+set @admin2 := last_insert_id();
+
+insert into Usuario (username, clave, rol) values ('admin3@correo.com', @HASH_111, 'ADMIN');
+set @u_admin3 := last_insert_id();
+insert into Admin (usuario_id, identificacion, nombre) values (@u_admin3, 'ADMIN03', 'Administrador 3');
+set @admin3 := last_insert_id();
+
+/* =========================
+   CARACTERÍSTICAS (más completas)
+   ========================= */
 insert into Caracteristica (nombre, id_padre) values ('Lenguajes de programación', null);
 set @leng := last_insert_id();
 
 insert into Caracteristica (nombre, id_padre) values ('Tecnologías Web', null);
 set @web := last_insert_id();
 
+insert into Caracteristica (nombre, id_padre) values ('Bases de datos', null);
+set @db := last_insert_id();
+
+/* hijos lenguajes */
 insert into Caracteristica (nombre, id_padre) values ('Java', @leng);
+set @c_java := last_insert_id();
 insert into Caracteristica (nombre, id_padre) values ('C#', @leng);
+set @c_csharp := last_insert_id();
+insert into Caracteristica (nombre, id_padre) values ('Python', @leng);
+set @c_python := last_insert_id();
+
+/* hijos web */
 insert into Caracteristica (nombre, id_padre) values ('HTML', @web);
+set @c_html := last_insert_id();
 insert into Caracteristica (nombre, id_padre) values ('CSS', @web);
+set @c_css := last_insert_id();
 insert into Caracteristica (nombre, id_padre) values ('JavaScript', @web);
+set @c_js := last_insert_id();
 
-/* EMPRESA demo */
-insert into Usuario (username, clave, rol)
-values ('empresa@correo.com', '$2a$12$SGGHeK8BBUt5HAp3J0ZqZuQUfyh92QGyY.TwZWLp98zP1ra8o2JS2', 'EMPRESA');
-/* clave 222 */
+/* hijos db */
+insert into Caracteristica (nombre, id_padre) values ('MySQL', @db);
+set @c_mysql := last_insert_id();
+insert into Caracteristica (nombre, id_padre) values ('PostgreSQL', @db);
+set @c_pg := last_insert_id();
 
-set @uemp := last_insert_id();
+/* =========================
+   3 EMPRESAS (2 aprobadas + 1 pendiente)
+   ========================= */
+insert into Usuario (username, clave, rol) values ('empresa1@correo.com', @HASH_111, 'EMPRESA');
+set @u_emp1 := last_insert_id();
+insert into Empresa (usuario_id, nombre, localizacion, telefono, descripcion, estado_aprobacion, fecha_aprobacion, aprobado_por_admin_id)
+values (@u_emp1, 'Empresa Uno S.A.', 'San José', '2222-1001', 'Empresa de ejemplo 1', 'APROBADO', now(), @admin1);
+set @emp1 := last_insert_id();
 
+insert into Usuario (username, clave, rol) values ('empresa2@correo.com', @HASH_111, 'EMPRESA');
+set @u_emp2 := last_insert_id();
+insert into Empresa (usuario_id, nombre, localizacion, telefono, descripcion, estado_aprobacion, fecha_aprobacion, aprobado_por_admin_id)
+values (@u_emp2, 'Empresa Dos Ltda.', 'Heredia', '2222-1002', 'Empresa de ejemplo 2', 'APROBADO', now(), @admin1);
+set @emp2 := last_insert_id();
+
+insert into Usuario (username, clave, rol) values ('empresa3@correo.com', @HASH_111, 'EMPRESA');
+set @u_emp3 := last_insert_id();
 insert into Empresa (usuario_id, nombre, localizacion, telefono, descripcion, estado_aprobacion)
-values (@uemp, 'Empresa Demo', 'San José', '2222-2222', 'Empresa de ejemplo', 'PENDIENTE');
+values (@u_emp3, 'Empresa Tres Inc.', 'Alajuela', '2222-1003', 'Empresa pendiente', 'PENDIENTE');
+set @emp3 := last_insert_id();
 
-/* OFERENTE demo */
-insert into Usuario (username, clave, rol)
-values ('oferente@correo.com', '$2a$12$iUlQtYXbuBbienG0qMiUsOKbSAl64/zah1YAktj.fo4FRBinqT8j6', 'OFERENTE');
-/* clave 333 */
+/* =========================
+   3 OFERENTES (2 aprobados + 1 pendiente)
+   ========================= */
+insert into Usuario (username, clave, rol) values ('oferente1@correo.com', @HASH_111, 'OFERENTE');
+set @u_of1 := last_insert_id();
+insert into Oferente (usuario_id, identificacion, nombre, primer_apellido, nacionalidad, telefono, lugar_residencia,
+                      estado_aprobacion, fecha_aprobacion, aprobado_por_admin_id)
+values (@u_of1, '1-1111-1111', 'Ana', 'Pérez', 'CR', '8888-1001', 'Heredia', 'APROBADO', now(), @admin1);
+set @of1 := last_insert_id();
 
-set @uof := last_insert_id();
+insert into Usuario (username, clave, rol) values ('oferente2@correo.com', @HASH_111, 'OFERENTE');
+set @u_of2 := last_insert_id();
+insert into Oferente (usuario_id, identificacion, nombre, primer_apellido, nacionalidad, telefono, lugar_residencia,
+                      estado_aprobacion, fecha_aprobacion, aprobado_por_admin_id)
+values (@u_of2, '2-2222-2222', 'Luis', 'Gómez', 'CR', '8888-1002', 'San José', 'APROBADO', now(), @admin1);
+set @of2 := last_insert_id();
 
-insert into Oferente (usuario_id, identificacion, nombre, primer_apellido, nacionalidad, telefono, lugar_residencia, estado_aprobacion)
-values (@uof, '1-1111-1111', 'Ana', 'Pérez', 'CR', '8888-8888', 'Heredia', 'PENDIENTE');
+insert into Usuario (username, clave, rol) values ('oferente3@correo.com', @HASH_111, 'OFERENTE');
+set @u_of3 := last_insert_id();
+insert into Oferente (usuario_id, identificacion, nombre, primer_apellido, nacionalidad, telefono, lugar_residencia,
+                      estado_aprobacion)
+values (@u_of3, '3-3333-3333', 'María', 'López', 'CR', '8888-1003', 'Cartago', 'PENDIENTE');
+set @of3 := last_insert_id();
 
-/* =========================================================
-   EJEMPLO: aprobar empresa y crear un puesto público (opcional)
-   (Descomentá si querés datos de prueba completos)
-   =========================================================
--- update Empresa set estado_aprobacion='APROBADO', fecha_aprobacion=now(), aprobado_por_admin_id=1 where id=1;
+/* =========================
+   3 PUESTOS (para probar home top5 + buscar + privados)
+   ========================= */
+insert into Puesto (empresa_id, descripcion_general, salario_ofrecido, tipo_publicacion, activo)
+values (@emp1, 'Desarrollador Java Jr', 1200.00, 'PUBLICO', 1);
+set @p1 := last_insert_id();
 
--- insert into Puesto (empresa_id, descripcion_general, salario_ofrecido, tipo_publicacion, activo)
--- values (1, 'Desarrollador Java Jr', 1200.00, 'PUBLICO', 1);
+insert into Puesto (empresa_id, descripcion_general, salario_ofrecido, tipo_publicacion, activo)
+values (@emp1, 'QA Manual', 900.00, 'PUBLICO', 1);
+set @p2 := last_insert_id();
 
--- set @puesto := last_insert_id();
--- -- Requisito: Java nivel 3 (asumiendo que Java quedó con id=3)
--- insert into PuestoCaracteristica (puesto_id, caracteristica_id, nivel_deseado) values (@puesto, 3, 3);
+insert into Puesto (empresa_id, descripcion_general, salario_ofrecido, tipo_publicacion, activo)
+values (@emp2, 'Fullstack (privado)', 1800.00, 'PRIVADO', 1);
+set @p3 := last_insert_id();
 
--- -- Habilidad oferente: Java nivel 4 (oferente id=1, Java id=3)
--- insert into OferenteHabilidad (oferente_id, caracteristica_id, nivel) values (1, 3, 4);
-   ========================================================= */
+/* requisitos puestos */
+insert into PuestoCaracteristica (puesto_id, caracteristica_id, nivel_deseado) values (@p1, @c_java, 3);
+insert into PuestoCaracteristica (puesto_id, caracteristica_id, nivel_deseado) values (@p1, @c_mysql, 2);
+
+insert into PuestoCaracteristica (puesto_id, caracteristica_id, nivel_deseado) values (@p2, @c_html, 2);
+
+insert into PuestoCaracteristica (puesto_id, caracteristica_id, nivel_deseado) values (@p3, @c_java, 4);
+insert into PuestoCaracteristica (puesto_id, caracteristica_id, nivel_deseado) values (@p3, @c_css, 3);
+insert into PuestoCaracteristica (puesto_id, caracteristica_id, nivel_deseado) values (@p3, @c_mysql, 3);
+
+/* =========================
+   HABILIDADES OFERENTES
+   ========================= */
+insert into OferenteHabilidad (oferente_id, caracteristica_id, nivel) values (@of1, @c_java, 4);
+insert into OferenteHabilidad (oferente_id, caracteristica_id, nivel) values (@of1, @c_mysql, 3);
+
+insert into OferenteHabilidad (oferente_id, caracteristica_id, nivel) values (@of2, @c_java, 3);
+insert into OferenteHabilidad (oferente_id, caracteristica_id, nivel) values (@of2, @c_css, 4);
+
+/* of3 pendiente igual puede tener habilidades (si querés) */
+insert into OferenteHabilidad (oferente_id, caracteristica_id, nivel) values (@of3, @c_html, 3);

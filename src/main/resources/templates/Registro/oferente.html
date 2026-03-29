@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registro Oferente</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/Styles/styles.css}">
+</head>
+<body>
+<header>
+    <div class="nav-left">
+        <div class="logo">BolsaEmpleo</div>
+        <div class="nav-links">
+            <a th:href="@{/home}">Inicio</a>
+            <a th:href="@{/puestos/buscar}">Buscar puestos</a>
+            <a th:href="@{/registro}">Registro</a>
+        </div>
+    </div>
+    <div class="nav-right">
+        <a th:href="@{/login}">Login</a>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="title">Registro de Oferente</div>
+
+        <div th:if="${error}" style="color:red; margin-bottom:10px;" th:text="${error}"></div>
+
+        <form method="post" th:action="@{/registro/oferente}">
+            <h3>Datos de acceso</h3>
+            <label>Correo:</label><br>
+            <input type="email" name="correo" required><br><br>
+
+            <label>Contraseña:</label><br>
+            <input type="password" name="clave" required><br><br>
+
+            <h3>Datos personales</h3>
+            <label>Identificación:</label><br>
+            <input type="text" name="identificacion" required><br><br>
+
+            <label>Nombre:</label><br>
+            <input type="text" name="nombre" required><br><br>
+
+            <label>Primer apellido:</label><br>
+            <input type="text" name="primerApellido" required><br><br>
+
+            <label>Nacionalidad:</label><br>
+            <input type="text" name="nacionalidad" required><br><br>
+
+            <label>Teléfono:</label><br>
+            <input type="text" name="telefono" required><br><br>
+
+            <label>Residencia:</label><br>
+            <input type="text" name="lugarResidencia" required><br><br>
+
+            <button type="submit" class="btn">Registrar</button>
+            <a th:href="@{/registro}" class="btn">Volver</a>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <div><b>Bolsa de Empleo</b><br>Total Soft Inc.</div>
+    <div>Contacto: info@bolsaempleo.local</div>
+</footer>
+</body>
+</html>
