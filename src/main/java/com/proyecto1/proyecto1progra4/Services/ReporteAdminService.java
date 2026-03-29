@@ -58,7 +58,6 @@ public class ReporteAdminService {
                 table.addCell(bodyCell(String.valueOf(cantidad)));
             }
 
-            // total
             PdfPCell totalCell = new PdfPCell(new Phrase("Total", new Font(Font.HELVETICA, 10, Font.BOLD)));
             totalCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             totalCell.setBackgroundColor(new Color(245, 245, 245));

@@ -69,14 +69,12 @@ public class ControllerEmpresa {
                 .orElseThrow(() -> new RuntimeException("Oferente no encontrado"));
 
         if (oferente.getCvPath() == null || oferente.getCvPath().isBlank()) {
-            // No CV subido => 404 controlado (o podrías redirigir a la vista con mensaje)
             return ResponseEntity.notFound().build();
         }
 
         Path path = Paths.get(oferente.getCvPath());
 
         if (!java.nio.file.Files.exists(path)) {
-            // Archivo no encontrado => 404 controlado
             return ResponseEntity.notFound().build();
         }
 

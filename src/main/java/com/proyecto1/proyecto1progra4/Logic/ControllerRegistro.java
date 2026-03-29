@@ -22,7 +22,6 @@ public class ControllerRegistro {
         return "registro/index";
     }
 
-    // ===== Empresa =====
     @GetMapping("/empresa")
     public String formEmpresa() {
         return "registro/empresa";
@@ -56,7 +55,7 @@ public class ControllerRegistro {
         }
     }
 
-    // ===== Oferente =====
+
     @GetMapping("/oferente")
     public String formOferente() {
         return "registro/oferente";

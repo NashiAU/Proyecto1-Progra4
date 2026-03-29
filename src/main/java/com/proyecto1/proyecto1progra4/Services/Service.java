@@ -19,16 +19,11 @@ public class Service {
     @Autowired private PuestoRepository puestos;
     @Autowired private CaracteristicaRepository caracteristicas;
 
-    // =========================
-    // HOME / CONSULTAS PUBLICAS
-    // =========================
+
     public List<Puesto> top5PuestosPublicosRecientes() {
         return puestos.findTop5ByTipoPublicacionOrderByFechaRegistroDesc("PUBLICO");
     }
 
-    // =========================
-    // REGISTRO (crea Usuario + perfil pendiente)
-    // =========================
     @Transactional
     public void registrarEmpresa(Usuario u, Empresa e) {
         // Reglas básicas
@@ -94,9 +89,6 @@ public class Service {
         oferentes.save(o);
     }
 
-    // =========================
-    // ADMIN: APROBACIONES
-    // =========================
     public List<Empresa> empresasPendientes() {
         return empresas.findByEstadoAprobacion("PENDIENTE");
     }
@@ -142,9 +134,6 @@ public class Service {
         oferentes.save(o);
     }
 
-    // =========================
-    // EMPRESA: PUESTOS
-    // =========================
     public List<Puesto> puestosPorEmpresa(Long empresaId) {
         return puestos.findByEmpresaIdOrderByFechaRegistroDesc(empresaId);
     }
@@ -166,9 +155,6 @@ public class Service {
         puestos.save(p);
     }
 
-    // =========================
-    // CARACTERISTICAS
-    // =========================
     public List<Caracteristica> caracteristicasRaiz() {
         // raíces: idPadre = null
         return caracteristicas.findRaices();
