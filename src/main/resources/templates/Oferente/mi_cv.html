@@ -21,7 +21,9 @@
 
     <div class="nav-right">
         <span th:text="${#authentication.name}"></span>
-        <button class="btn-logout">Salir</button>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
     </div>
 </header>
 

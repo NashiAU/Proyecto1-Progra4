@@ -79,8 +79,6 @@ body{
     background:#1f63d6;
 }
 
-/* FOOTER */
-
 footer{
     position:fixed;
     bottom:0;
@@ -108,7 +106,6 @@ table {
     margin-top: 20px;
 }
 
-/* Encabezados */
 th {
     background-color: #2c3e50;
     color: white;
@@ -118,22 +115,20 @@ th {
     letter-spacing: 0.5px;
 }
 
-/* Filas */
 tr {
     border-bottom: 1px solid #ddd;
 }
 
-/* Celdas */
+
 td {
     padding: 10px;
 }
 
-/* Filas alternas */
+
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-/* Hover sobre fila */
 tr:hover {
     background-color: #dfe6e9;
     transition: 0.2s;
@@ -171,7 +166,6 @@ tr:hover {
     gap: 30px;
 }
 
-/* cada columna */
 .habilidades,
 .ruta,
 .ingresar{
@@ -182,14 +176,13 @@ tr:hover {
     background-color: #f9f9f9;
 }
 
-/* items de habilidades */
 .item{
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-/* boton eliminar */
+
 .eliminar{
     color: red;
     border: 2px solid red;
@@ -204,14 +197,14 @@ tr:hover {
     color: white;
 }
 
-/* inputs */
+
 input{
     width: 100%;
     padding: 6px;
     margin-bottom: 10px;
 }
 
-/* boton agregar */
+
 form button{
     background-color: #2c3e50;
     color: white;

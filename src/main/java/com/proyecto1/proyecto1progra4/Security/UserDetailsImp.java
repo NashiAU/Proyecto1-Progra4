@@ -15,7 +15,7 @@ public class UserDetailsImp implements UserDetails {
 
     public UserDetailsImp(Usuario usuario, boolean enabled) {
         this.usuario = usuario;
-        this.enabled = this.enabled;
+        this.enabled = enabled;
     }
 
     public Usuario getUsuario() {
